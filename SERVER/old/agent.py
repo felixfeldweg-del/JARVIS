@@ -6,8 +6,8 @@ from livekit.plugins import (
     google,
     ai_coustics,
 )
-from Mem0Client import Mem0Client
-from prompts import AGENT_INSTRUCTION, SESSION_INSTRUCTION
+from SERVER.old.Mem0Client import Mem0Client
+from SERVER.old.prompts import AGENT_INSTRUCTION, SESSION_INSTRUCTION
 import json, logging
 import os
 

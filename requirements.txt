@@ -12,5 +12,5 @@ python-dotenv
 ai-coustics-livekit-plugin
 httpx
 logging
-os
-
+fastapi
+uvicorn
