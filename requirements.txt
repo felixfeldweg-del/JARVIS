@@ -14,3 +14,6 @@ httpx
 logging
 fastapi
 uvicorn
+dataclasses
+sqlalchemy 
+aiosqlite

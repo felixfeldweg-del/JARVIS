@@ -1,0 +1,11 @@
+{
+    "emeraldwalk.runonsave": {
+         "commands": [
+      {
+        // Run whenever html, css, or js files are saved
+        "match": "\\.requirements.txt",
+        "cmd": "pip install -r requirements.txt --skip-installed",
+      },
+    ],
+    }
+}
