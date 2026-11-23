@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "check_fk",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "SERVER.TEST.check_fk",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

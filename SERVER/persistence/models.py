@@ -9,7 +9,7 @@ from sqlalchemy import(
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from SERVER.persistance.database import Base
+from SERVER.persistence.database import Base
 
 class Session(Base):
     __tablename__ = "sessions"
@@ -38,12 +38,13 @@ class Session(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
     )
 
     messages: Mapped[list["Message"]] = relationship(
         back_populates="session",
         cascade="all, delete-orphan",
-        order_by="Message.created_at",
+        order_by="Message.id",
     )
 
 class Message(Base):
@@ -55,8 +56,8 @@ class Message(Base):
             autoincrement=True
         )
 
-        sesssion_id: Mapped[str] = mapped_column(
-            ForeignKey("sessions.id"),
+        session_id: Mapped[str] = mapped_column(
+            ForeignKey("sessions.id", ondelete="CASCADE"),
             nullable=False,
             index=True
         )

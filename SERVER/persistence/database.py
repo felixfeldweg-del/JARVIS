@@ -6,20 +6,26 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine
 )
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy import event
+from SHARED.config import settings
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-DB_DIR = PROJECT_ROOT / "data"
+DB_DIR = settings.db_dir
 DB_DIR.mkdir(parents=True, exist_ok=True)
-
 DB_PATH = DB_DIR / "jarvis.db"
-
 DATABASE_URL = f"sqlite+aiosqlite:///{DB_PATH.as_posix()}"
 
 engine = create_async_engine(
     DATABASE_URL,
     echo=False
 )
+@event.listens_for(engine.sync_engine, "connect")
+def _set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    try:
+        cursor.execute("PRAGMA foreign_keys = ON")
+    finally:
+        cursor.close()
 
 SessionLocal = async_sessionmaker(
     bind=engine,
@@ -38,5 +44,5 @@ async def close_db():
     await engine.dispose()
 
 async def get_db_session():
-    async with SessionLocal as session:
+    async with SessionLocal() as session:
         yield session

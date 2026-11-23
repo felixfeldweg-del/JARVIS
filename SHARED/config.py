@@ -1,4 +1,4 @@
-from pathlib import Path, WindowsPath
+from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     livekit_api_key: str = ""
     livekit_api_secret: str = ""
 
-    log_dir: WindowsPath = PROJECT_ROOT / "logs"
+    log_dir: Path = PROJECT_ROOT / "logs"
+    db_dir: Path = PROJECT_ROOT / "data"
 
 settings = Settings()
